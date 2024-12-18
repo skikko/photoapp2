@@ -44,7 +44,7 @@ html, body {
    ma la risoluzione dell'immagine finale non ne risente */
 .camera-container {
   position: relative;
-  width: 70vw;
+  width: 60vw;
   height: calc(90vw * 1181 / 1671);
   background: #000;
 }
