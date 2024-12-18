@@ -1,3 +1,9 @@
+const passwordOverlay = document.getElementById('password-overlay');
+const passwordInput = document.getElementById('password-input');
+const passwordBtn = document.getElementById('password-btn');
+const passwordError = document.getElementById('password-error');
+
+const appContent = document.querySelector('.app-content');
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -16,44 +22,52 @@ const desiredHeight = 1181;
 canvas.width = desiredWidth;
 canvas.height = desiredHeight;
 
-// Accesso camera
-navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false })
-  .then(stream => {
-    video.srcObject = stream;
-    video.play();
-  })
-  .catch(err => {
-    console.error("Errore nell'accesso alla fotocamera:", err);
-    alert("Impossibile accedere alla fotocamera. Controlla i permessi o il supporto del tuo browser.");
-  });
+// Funzione per inizializzare la fotocamera
+function initCamera() {
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false })
+    .then(stream => {
+      video.srcObject = stream;
+      video.play();
+    })
+    .catch(err => {
+      console.error("Errore nell'accesso alla fotocamera:", err);
+      alert("Impossibile accedere alla fotocamera. Controlla i permessi o il supporto del tuo browser.");
+    });
+}
+
+// Controllo password
+passwordBtn.addEventListener('click', () => {
+  const enteredPassword = passwordInput.value;
+  if (enteredPassword === '123456') {
+    passwordOverlay.style.display = 'none';
+    appContent.style.display = 'flex';
+    initCamera();
+  } else {
+    passwordError.style.display = 'block';
+  }
+});
 
 // Scatta Foto
 captureBtn.addEventListener('click', () => {
-  // Disegna il frame del video sul canvas (adattato a 1671x1181)
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  // Disegna la cornice
   const frameImg = new Image();
   frameImg.crossOrigin = 'anonymous';
   frameImg.src = selectedFrame.src;
   frameImg.onload = () => {
     ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
-    // Mostra anteprima
     const dataURL = canvas.toDataURL('image/png');
     previewImg.src = dataURL;
     previewImg.style.display = 'block';
-    
-    // Nascondi video e frame
+
     video.style.display = 'none';
     selectedFrame.style.display = 'none';
 
-    // Mostra i pulsanti post-scatto (Scarica, Stampa, Scarta)
     downloadLink.href = dataURL;
     downloadLink.style.display = 'block';
     printBtn.style.display = 'block';
     discardBtn.style.display = 'block';
 
-    // Nascondi i pulsanti pre-scatto (Scatta, Carica)
     captureBtn.style.display = 'none';
     uploadFrameBtn.style.display = 'none';
   };
@@ -75,7 +89,7 @@ frameInput.addEventListener('change', (e) => {
   reader.readAsDataURL(file);
 });
 
-// Scarta la foto scattata e torna alla situazione iniziale
+// Scarta foto
 discardBtn.addEventListener('click', () => {
   previewImg.style.display = 'none';
   video.style.display = 'block';
@@ -89,17 +103,15 @@ discardBtn.addEventListener('click', () => {
   uploadFrameBtn.style.display = 'block';
 });
 
-// Stampa l'immagine
+// Stampa
 printBtn.addEventListener('click', () => {
-  // Apriamo una nuova finestra con l'immagine e lanciamo la stampa
   const printWindow = window.open('', '_blank');
   printWindow.document.write(`<html><head><title>Stampa Immagine</title></head><body style="margin:0; padding:0;">
   <img src="${previewImg.src}" style="width:100%; height:auto;" />
   </body></html>`);
-  
+
   printWindow.document.close();
   printWindow.focus();
-  // Aspetta che l'immagine sia caricata prima di stampare
   printWindow.document.querySelector('img').onload = () => {
     printWindow.print();
     printWindow.close();
