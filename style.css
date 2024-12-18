@@ -107,7 +107,7 @@ html, body {
 .camera-container {
   position: relative;
   width: 80vw;
-  height: calc(80vw * 1181 / 1671);
+  height: calc(60vw * 1181 / 1671);
   overflow: hidden;
 }
 
