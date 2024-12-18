@@ -9,6 +9,49 @@ html, body {
   color: #000;
 }
 
+/* Overlay per password */
+.password-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.password-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.password-container h2 {
+  margin-bottom: 20px;
+}
+
+.password-container input {
+  padding: 10px;
+  font-size: 1rem;
+  width: 80%;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.password-container button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background: #87CEFA;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.password-container button:hover {
+  background: #7ec0ee;
+}
+
 /* Messaggio se in portrait */
 .rotate-message {
   display: none;
@@ -41,7 +84,7 @@ html, body {
   justify-content: center;
 }
 
-/* Manteniamo proporzione 1671×1181 e adattiamo in base alla larghezza viewport */
+/* Manteniamo proporzione 1671×1181 */
 .camera-container {
   position: relative;
   width: 80vw;
