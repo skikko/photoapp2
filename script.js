@@ -1,9 +1,3 @@
-const passwordOverlay = document.getElementById('password-overlay');
-const passwordInput = document.getElementById('password-input');
-const passwordBtn = document.getElementById('password-btn');
-const passwordError = document.getElementById('password-error');
-
-const appContent = document.querySelector('.app-content');
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -22,30 +16,16 @@ const desiredHeight = 1181;
 canvas.width = desiredWidth;
 canvas.height = desiredHeight;
 
-// Funzione per inizializzare la fotocamera
-function initCamera() {
-  navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false })
-    .then(stream => {
-      video.srcObject = stream;
-      video.play();
-    })
-    .catch(err => {
-      console.error("Errore nell'accesso alla fotocamera:", err);
-      alert("Impossibile accedere alla fotocamera. Controlla i permessi o il supporto del tuo browser.");
-    });
-}
-
-// Controllo password
-passwordBtn.addEventListener('click', () => {
-  const enteredPassword = passwordInput.value;
-  if (enteredPassword === '123456') {
-    passwordOverlay.style.display = 'none';
-    appContent.style.display = 'flex';
-    initCamera();
-  } else {
-    passwordError.style.display = 'block';
-  }
-});
+// Accesso camera
+navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false })
+  .then(stream => {
+    video.srcObject = stream;
+    video.play();
+  })
+  .catch(err => {
+    console.error("Errore nell'accesso alla fotocamera:", err);
+    alert("Impossibile accedere alla fotocamera. Controlla i permessi o il supporto del tuo browser.");
+  });
 
 // Scatta Foto
 captureBtn.addEventListener('click', () => {
