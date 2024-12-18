@@ -10,7 +10,7 @@ const discardBtn = document.getElementById('discard-btn');
 const previewImg = document.getElementById('preview-img');
 const printBtn = document.getElementById('print-btn');
 
-// Chiediamo una risoluzione alta alla fotocamera
+// Richiesta media con risoluzione ideale alta
 navigator.mediaDevices.getUserMedia({
   video: {
     facingMode: "environment",
@@ -26,14 +26,13 @@ navigator.mediaDevices.getUserMedia({
   alert("Impossibile accedere alla fotocamera. Controlla i permessi o il supporto del tuo browser.");
 });
 
-// Dopo che il video è pronto, impostiamo il canvas alle dimensioni native del video
 video.addEventListener('loadedmetadata', () => {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
 });
 
-// Scatta Foto
 captureBtn.addEventListener('click', () => {
+  // Disegniamo il frame del video sul canvas
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
   const frameImg = new Image();
@@ -48,7 +47,18 @@ captureBtn.addEventListener('click', () => {
     video.style.display = 'none';
     selectedFrame.style.display = 'none';
 
+    // Generiamo un nome file unico con data e ora
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth()+1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const fileName = `foto_${year}${month}${day}_${hours}${minutes}${seconds}.png`;
+
     downloadLink.href = dataURL;
+    downloadLink.download = fileName; // Nome file con data e ora
     downloadLink.style.display = 'block';
     printBtn.style.display = 'block';
     discardBtn.style.display = 'block';
@@ -58,7 +68,6 @@ captureBtn.addEventListener('click', () => {
   };
 });
 
-// Carica nuova cornice
 uploadFrameBtn.addEventListener('click', () => {
   frameInput.click();
 });
@@ -74,7 +83,6 @@ frameInput.addEventListener('change', (e) => {
   reader.readAsDataURL(file);
 });
 
-// Scarta foto
 discardBtn.addEventListener('click', () => {
   previewImg.style.display = 'none';
   video.style.display = 'block';
@@ -88,7 +96,6 @@ discardBtn.addEventListener('click', () => {
   uploadFrameBtn.style.display = 'block';
 });
 
-// Stampa
 printBtn.addEventListener('click', () => {
   const printWindow = window.open('', '_blank');
   printWindow.document.write(`<html><head><title>Stampa Immagine</title></head><body style="margin:0; padding:0;">
