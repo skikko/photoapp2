@@ -10,22 +10,27 @@ const discardBtn = document.getElementById('discard-btn');
 const previewImg = document.getElementById('preview-img');
 const printBtn = document.getElementById('print-btn');
 
-// Dimensioni finali 1671×1181
-const desiredWidth = 1671;
-const desiredHeight = 1181;
-canvas.width = desiredWidth;
-canvas.height = desiredHeight;
+// Chiediamo una risoluzione alta alla fotocamera
+navigator.mediaDevices.getUserMedia({
+  video: {
+    facingMode: "environment",
+    width: { ideal: 1920 },
+    height: { ideal: 1080 }
+  },
+  audio: false
+}).then(stream => {
+  video.srcObject = stream;
+  video.play();
+}).catch(err => {
+  console.error("Errore nell'accesso alla fotocamera:", err);
+  alert("Impossibile accedere alla fotocamera. Controlla i permessi o il supporto del tuo browser.");
+});
 
-// Accesso camera
-navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false })
-  .then(stream => {
-    video.srcObject = stream;
-    video.play();
-  })
-  .catch(err => {
-    console.error("Errore nell'accesso alla fotocamera:", err);
-    alert("Impossibile accedere alla fotocamera. Controlla i permessi o il supporto del tuo browser.");
-  });
+// Dopo che il video è pronto, impostiamo il canvas alle dimensioni native del video
+video.addEventListener('loadedmetadata', () => {
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+});
 
 // Scatta Foto
 captureBtn.addEventListener('click', () => {
