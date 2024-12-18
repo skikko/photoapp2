@@ -13,31 +13,40 @@ html, body {
 .password-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  transition: opacity 0.3s ease;
 }
 
 .password-container {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
   text-align: center;
+  width: 80%;
+  max-width: 300px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 .password-container h2 {
   margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
 }
 
 .password-container input {
   padding: 10px;
   font-size: 1rem;
-  width: 80%;
+  width: 100%;
   margin-bottom: 20px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .password-container button {
@@ -47,9 +56,19 @@ html, body {
   border: none;
   border-radius: 10px;
   cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  color: #000;
 }
 .password-container button:hover {
   background: #7ec0ee;
+}
+
+#password-error {
+  color: red; 
+  display: none;
+  margin-top: 10px;
+  font-size: 0.9rem;
 }
 
 /* Messaggio se in portrait */
