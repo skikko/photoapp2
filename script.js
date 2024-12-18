@@ -14,8 +14,8 @@ const printBtn = document.getElementById('print-btn');
 navigator.mediaDevices.getUserMedia({
   video: {
     facingMode: "environment",
-    width: { ideal: 1920 },
-    height: { ideal: 1080 }
+    width: { ideal: 1671 },
+    height: { ideal: 1181 }
   },
   audio: false
 }).then(stream => {
