@@ -4,71 +4,9 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #fff;
+  background: #000; /* Sfondo nero */
   font-family: sans-serif;
-  color: #000;
-}
-
-/* Overlay per password */
-.password-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  transition: opacity 0.3s ease;
-}
-
-.password-container {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 15px;
-  text-align: center;
-  width: 80%;
-  max-width: 300px;
-  box-sizing: border-box;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-.password-container h2 {
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.password-container input {
-  padding: 10px;
-  font-size: 1rem;
-  width: 100%;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-.password-container button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  background: #87CEFA;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 100%;
-  font-weight: bold;
-  color: #000;
-}
-.password-container button:hover {
-  background: #7ec0ee;
-}
-
-#password-error {
-  color: red; 
-  display: none;
-  margin-top: 10px;
-  font-size: 0.9rem;
+  color: #fff;
 }
 
 .rotate-message {
@@ -90,9 +28,9 @@ html, body {
   display: flex;
   width: 100vw;
   height: 100vh;
-  background: #fff;
   box-sizing: border-box;
   overflow: hidden;
+  background: #000; /* Sfondo nero anche dell’app */
 }
 
 .left-panel {
@@ -102,16 +40,14 @@ html, body {
   justify-content: center;
 }
 
-/* Manteniamo la proporzione, ma riduciamo ulteriormente per evitare tagli su Safari */
+/* Manteniamo proporzione 1671×1181 e riduciamo per non tagliare la cornice su safari */
 .camera-container {
   position: relative;
   width: 50vw;
   height: calc(50vw * 1181 / 1671);
-  background: #add8e6; /* sfondo visibile per capire il posizionamento */
-  /* Non usiamo overflow:hidden in modo che Safari non tagli nulla */
+  background: #000; /* sfondo nero */
 }
 
-/* Sia il video che la cornice riempiono l'area e si adattano con object-fit */
 #video, #selected-frame, #preview-img {
   position: absolute;
   top: 0;
@@ -120,10 +56,6 @@ html, body {
   height: 100%;
   object-fit: contain;
   border-radius: 20px;
-}
-
-#video {
-  background: #add8e6;
 }
 
 #selected-frame {
@@ -148,11 +80,11 @@ html, body {
 #capture-btn, #download-link, #upload-frame-btn, #discard-btn, #print-btn {
   display: block;
   width: 100%;
-  background: #87CEFA;
-  color: #000;
+  background: #000; /* sfondo pulsanti nero */
+  color: #fff;       /* testo pulsanti bianco */
   text-align: center;
   text-decoration: none;
-  border: none;
+  border: 2px solid #fff; /* aggiungiamo un bordo bianco per visibilità */
   border-radius: 20px;
   padding: 10px;
   font-size: 1rem;
@@ -163,15 +95,10 @@ html, body {
   text-decoration: none;
 }
 
-#capture-btn:hover, #upload-frame-btn:hover, #discard-btn:hover, #print-btn:hover {
-  background: #7ec0ee;
+#capture-btn:hover, #upload-frame-btn:hover, #discard-btn:hover, #print-btn:hover, #download-link:hover {
+  background: #333; /* un grigio scuro per hover */
 }
 
-#download-link:hover {
-  background: #7ec0ee;
-}
-
-/* Modalità portrait */
 @media screen and (orientation:portrait) {
   .app-content {
     display: none;
@@ -181,7 +108,6 @@ html, body {
   }
 }
 
-/* Modalità landscape */
 @media screen and (orientation:landscape) {
   .rotate-message {
     display: none;
