@@ -43,7 +43,7 @@ html, body {
 
 .camera-container {
   position: relative;
-  width: 80vw;
+  width: 80vw; /* Grande parte dello schermo per la camera */
   height: auto;
 }
 
@@ -86,7 +86,7 @@ html, body {
   box-sizing: border-box;
 }
 
-#capture-btn, #download-link, #upload-frame-btn, #discard-btn {
+#capture-btn, #download-link, #upload-frame-btn, #discard-btn, #print-btn {
   display: block;
   width: 100%;
   background: #87CEFA;
@@ -104,7 +104,7 @@ html, body {
   text-decoration: none;
 }
 
-#capture-btn:hover, #upload-frame-btn:hover, #discard-btn:hover {
+#capture-btn:hover, #upload-frame-btn:hover, #discard-btn:hover, #print-btn:hover {
   background: #7ec0ee;
 }
 
