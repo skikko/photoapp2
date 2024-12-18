@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MVP Cornice Fotocamera</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Scatta una foto con cornice</h1>
+    <div class="camera-container">
+      <video id="video" autoplay playsinline></video>
+      <img id="selected-frame" src="frames/frame.png" alt="Cornice" />
+    </div>
+    <button id="capture-btn">Scatta Foto</button>
+    
+    <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+    <a id="download-link" href="#" download="foto_cornice.png" style="display:none;">Scarica Foto</a>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
