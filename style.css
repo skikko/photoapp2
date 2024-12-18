@@ -4,7 +4,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #000; /* Sfondo nero */
+  background: #000;
   font-family: sans-serif;
   color: #fff;
 }
@@ -30,7 +30,7 @@ html, body {
   height: 100vh;
   box-sizing: border-box;
   overflow: hidden;
-  background: #000; /* Sfondo nero anche dell’app */
+  background: #000;
 }
 
 .left-panel {
@@ -40,12 +40,13 @@ html, body {
   justify-content: center;
 }
 
-/* Manteniamo proporzione 1671×1181 e riduciamo per non tagliare la cornice su safari */
+/* Manteniamo dimensioni ridotte per evitare tagli su mobile, 
+   ma la risoluzione dell'immagine finale non ne risente */
 .camera-container {
   position: relative;
   width: 50vw;
   height: calc(50vw * 1181 / 1671);
-  background: #000; /* sfondo nero */
+  background: #000;
 }
 
 #video, #selected-frame, #preview-img {
@@ -80,11 +81,11 @@ html, body {
 #capture-btn, #download-link, #upload-frame-btn, #discard-btn, #print-btn {
   display: block;
   width: 100%;
-  background: #000; /* sfondo pulsanti nero */
-  color: #fff;       /* testo pulsanti bianco */
+  background: #000;
+  color: #fff;
   text-align: center;
   text-decoration: none;
-  border: 2px solid #fff; /* aggiungiamo un bordo bianco per visibilità */
+  border: 2px solid #fff;
   border-radius: 20px;
   padding: 10px;
   font-size: 1rem;
@@ -96,7 +97,7 @@ html, body {
 }
 
 #capture-btn:hover, #upload-frame-btn:hover, #discard-btn:hover, #print-btn:hover, #download-link:hover {
-  background: #333; /* un grigio scuro per hover */
+  background: #333;
 }
 
 @media screen and (orientation:portrait) {
