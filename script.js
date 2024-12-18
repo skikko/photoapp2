@@ -8,10 +8,11 @@ const uploadFrameBtn = document.getElementById('upload-frame-btn');
 const frameInput = document.getElementById('frame-input');
 const discardBtn = document.getElementById('discard-btn');
 const previewImg = document.getElementById('preview-img');
+const printBtn = document.getElementById('print-btn');
 
-// Dimensioni finali 16:9
-const desiredWidth = 1280;
-const desiredHeight = 720;
+// Dimensioni finali 1671×1181
+const desiredWidth = 1671;
+const desiredHeight = 1181;
 canvas.width = desiredWidth;
 canvas.height = desiredHeight;
 
@@ -28,7 +29,7 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audi
 
 // Scatta Foto
 captureBtn.addEventListener('click', () => {
-  // Disegna il frame del video sul canvas
+  // Disegna il frame del video sul canvas (adattato a 1671x1181)
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
   // Disegna la cornice
@@ -46,12 +47,13 @@ captureBtn.addEventListener('click', () => {
     video.style.display = 'none';
     selectedFrame.style.display = 'none';
 
-    // Mostra i pulsanti post-scatto
+    // Mostra i pulsanti post-scatto (Scarica, Stampa, Scarta)
     downloadLink.href = dataURL;
     downloadLink.style.display = 'block';
+    printBtn.style.display = 'block';
     discardBtn.style.display = 'block';
 
-    // Nascondi i pulsanti pre-scatto
+    // Nascondi i pulsanti pre-scatto (Scatta, Carica)
     captureBtn.style.display = 'none';
     uploadFrameBtn.style.display = 'none';
   };
@@ -73,16 +75,33 @@ frameInput.addEventListener('change', (e) => {
   reader.readAsDataURL(file);
 });
 
-// Scarta la foto scattata
+// Scarta la foto scattata e torna alla situazione iniziale
 discardBtn.addEventListener('click', () => {
-  // Ripristina situazione iniziale
   previewImg.style.display = 'none';
   video.style.display = 'block';
   selectedFrame.style.display = 'block';
 
   downloadLink.style.display = 'none';
   discardBtn.style.display = 'none';
+  printBtn.style.display = 'none';
 
   captureBtn.style.display = 'block';
   uploadFrameBtn.style.display = 'block';
+});
+
+// Stampa l'immagine
+printBtn.addEventListener('click', () => {
+  // Apriamo una nuova finestra con l'immagine e lanciamo la stampa
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write(`<html><head><title>Stampa Immagine</title></head><body style="margin:0; padding:0;">
+  <img src="${previewImg.src}" style="width:100%; height:auto;" />
+  </body></html>`);
+  
+  printWindow.document.close();
+  printWindow.focus();
+  // Aspetta che l'immagine sia caricata prima di stampare
+  printWindow.document.querySelector('img').onload = () => {
+    printWindow.print();
+    printWindow.close();
+  };
 });
