@@ -45,7 +45,7 @@ html, body {
 .camera-container {
   position: relative;
   width: 50vw;
-  height: calc(50vw * 1181 / 1671);
+  height: calc(70vw * 1181 / 1671);
   background: #000;
 }
 
