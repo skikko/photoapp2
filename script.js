@@ -9,8 +9,9 @@ const frameInput = document.getElementById('frame-input');
 const discardBtn = document.getElementById('discard-btn');
 const previewImg = document.getElementById('preview-img');
 const printBtn = document.getElementById('print-btn');
+const installBtn = document.getElementById('install-btn');
 
-// Impostiamo direttamente la risoluzione desiderata
+// Impostiamo direttamente la risoluzione desiderata per l'immagine finale
 const desiredWidth = 1671;
 const desiredHeight = 1181;
 canvas.width = desiredWidth;
@@ -32,19 +33,14 @@ navigator.mediaDevices.getUserMedia({
   alert("Impossibile accedere alla fotocamera. Controlla i permessi o il supporto del tuo browser.");
 });
 
-// Non usiamo più video.videoWidth/video.videoHeight per il canvas
-// poiché vogliamo forzare una risoluzione fissa.
-
 // Scatta Foto
 captureBtn.addEventListener('click', () => {
-  // Disegniamo il video sul canvas con la dimensione fissata a 1671x1181
   ctx.drawImage(video, 0, 0, desiredWidth, desiredHeight);
 
   const frameImg = new Image();
   frameImg.crossOrigin = 'anonymous';
   frameImg.src = selectedFrame.src;
   frameImg.onload = () => {
-    // Disegniamo la cornice
     ctx.drawImage(frameImg, 0, 0, desiredWidth, desiredHeight);
     const dataURL = canvas.toDataURL('image/png');
     previewImg.src = dataURL;
@@ -74,6 +70,7 @@ captureBtn.addEventListener('click', () => {
   };
 });
 
+// Carica nuova cornice
 uploadFrameBtn.addEventListener('click', () => {
   frameInput.click();
 });
@@ -89,6 +86,7 @@ frameInput.addEventListener('change', (e) => {
   reader.readAsDataURL(file);
 });
 
+// Scarta foto
 discardBtn.addEventListener('click', () => {
   previewImg.style.display = 'none';
   video.style.display = 'block';
@@ -102,6 +100,7 @@ discardBtn.addEventListener('click', () => {
   uploadFrameBtn.style.display = 'block';
 });
 
+// Stampa
 printBtn.addEventListener('click', () => {
   const printWindow = window.open('', '_blank');
   printWindow.document.write(`<html><head><title>Stampa Immagine</title></head><body style="margin:0; padding:0;">
@@ -114,4 +113,25 @@ printBtn.addEventListener('click', () => {
     printWindow.print();
     printWindow.close();
   };
+});
+
+// Gestione del prompt di installazione (PWA)
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'block';
+
+  installBtn.addEventListener('click', () => {
+    installBtn.style.display = 'none';
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      deferredPrompt = null;
+      if (choiceResult.outcome === 'accepted') {
+        console.log('L\'utente ha accettato l\'installazione');
+      } else {
+        console.log('L\'utente ha rifiutato l\'installazione');
+      }
+    });
+  });
 });
