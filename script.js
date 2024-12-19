@@ -10,7 +10,13 @@ const discardBtn = document.getElementById('discard-btn');
 const previewImg = document.getElementById('preview-img');
 const printBtn = document.getElementById('print-btn');
 
-// Richiesta media con risoluzione ideale alta
+// Impostiamo direttamente la risoluzione desiderata
+const desiredWidth = 1671;
+const desiredHeight = 1181;
+canvas.width = desiredWidth;
+canvas.height = desiredHeight;
+
+// Richiesta media con risoluzione ideale
 navigator.mediaDevices.getUserMedia({
   video: {
     facingMode: "environment",
@@ -26,20 +32,20 @@ navigator.mediaDevices.getUserMedia({
   alert("Impossibile accedere alla fotocamera. Controlla i permessi o il supporto del tuo browser.");
 });
 
-video.addEventListener('loadedmetadata', () => {
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-});
+// Non usiamo più video.videoWidth/video.videoHeight per il canvas
+// poiché vogliamo forzare una risoluzione fissa.
 
+// Scatta Foto
 captureBtn.addEventListener('click', () => {
-  // Disegniamo il frame del video sul canvas
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  // Disegniamo il video sul canvas con la dimensione fissata a 1671x1181
+  ctx.drawImage(video, 0, 0, desiredWidth, desiredHeight);
 
   const frameImg = new Image();
   frameImg.crossOrigin = 'anonymous';
   frameImg.src = selectedFrame.src;
   frameImg.onload = () => {
-    ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
+    // Disegniamo la cornice
+    ctx.drawImage(frameImg, 0, 0, desiredWidth, desiredHeight);
     const dataURL = canvas.toDataURL('image/png');
     previewImg.src = dataURL;
     previewImg.style.display = 'block';
@@ -50,7 +56,7 @@ captureBtn.addEventListener('click', () => {
     // Generiamo un nome file unico con data e ora
     const now = new Date();
     const year = now.getFullYear();
-    const month = String(now.getMonth()+1).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -58,7 +64,7 @@ captureBtn.addEventListener('click', () => {
     const fileName = `foto_${year}${month}${day}_${hours}${minutes}${seconds}.png`;
 
     downloadLink.href = dataURL;
-    downloadLink.download = fileName; // Nome file con data e ora
+    downloadLink.download = fileName;
     downloadLink.style.display = 'block';
     printBtn.style.display = 'block';
     discardBtn.style.display = 'block';
@@ -75,9 +81,9 @@ uploadFrameBtn.addEventListener('click', () => {
 frameInput.addEventListener('change', (e) => {
   const file = e.target.files[0];
   if (!file) return;
-  
+
   const reader = new FileReader();
-  reader.onload = function(event) {
+  reader.onload = function (event) {
     selectedFrame.src = event.target.result;
   };
   reader.readAsDataURL(file);
