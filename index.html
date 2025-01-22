@@ -2,44 +2,14 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <meta name="theme-color" content="#000000">
-  <link rel="manifest" href="manifest.json">
-  <title>MVP Cornice Fotocamera</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Benvenuto</title>
+  <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body>
-  <div class="rotate-message">Ruota il dispositivo in orizzontale per continuare.</div>
-  
-  <div class="app-content">
-    <div class="left-panel">
-      <div class="camera-container">
-        <video id="video" autoplay playsinline></video>
-        <img id="selected-frame" src="frames/frame.png" alt="Cornice" />
-        <img id="preview-img" alt="Anteprima" style="display:none;"/>
-      </div>
-    </div>
-    <div class="right-panel">
-      <button id="capture-btn">Scatta Foto</button>
-     <!--  <button id="upload-frame-btn">Carica Cornice</button> --> 
-      <a id="download-link" href="#" download="foto_cornice.png" style="display:none;">Scarica Foto</a>
-      <button id="print-btn" style="display:none;">Stampa</button>
-      <button id="discard-btn" style="display:none;">Scarta</button>
-      <input type="file" id="frame-input" accept="image/*" style="display:none;" />
-      
-      <!-- Pulsante installa nascosto all'inizio -->
-      <button id="install-btn" style="display:none;">Installa su tuo device</button>
-    </div>
-    <canvas id="canvas" style="display:none;"></canvas>
+  <div class="welcome-container">
+    <img src="path/to/logo.png" alt="Logo" class="logo" />
+    <a href="app.html" class="enter-button">Entra nell'app</a>
   </div>
-  
-  <script src="script.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js')
-        .then(() => console.log('Service Worker registrato con successo.'))
-        .catch(err => console.error('Service Worker non registrato:', err));
-    }
-  </script>
 </body>
 </html>
